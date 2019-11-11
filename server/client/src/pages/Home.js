@@ -4,7 +4,12 @@ const Home = () => {
     return (
         <section>
             <h2>Home</h2>
-            <p>Everything you need to know 
+            <hr/>
+            <p>Everything you need to know
+                about my meal prepper app!</p>
+            <p>Everything you need to know
+                about my meal prepper app!</p>
+            <p>Everything you need to know
                 about my meal prepper app!</p>
         </section>
 

@@ -9,14 +9,18 @@ import Home from "./pages/Home";
 
 function App() {
   return (
+    <>
     <Router>
      <NavBar/>
+     <div className="container">
      <Switch>
        <Route exact path="/discover" component={Discover} />
        <Route exact path="/search" component={Search} />
        <Route component={Home} />
      </Switch>
+     </div>
     </Router>
+    </>
   );
 }
 

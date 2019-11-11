@@ -1,9 +1,28 @@
-import React from "react";
+import React, { Component} from "react";
 
-const Discover = () => {
-    return (
-        <h2>Discover</h2>
-    )
+
+class Discover extends Component {
+    
+    state = {
+        recipeName: "",
+        favourites: [],
+
+    }
+
+    componentDidMount() {
+        
+    }
+
+    render () {
+        return (
+            <h2>Discover</h2>
+        )
+    }
+    
 }
+
+
+
+
 
 export default Discover;
