@@ -11,6 +11,11 @@ const Home = () => {
                 about my meal prepper app!</p>
             <p>Everything you need to know
                 about my meal prepper app!</p>
+
+                
+                <form>
+
+                </form>
         </section>
 
     )

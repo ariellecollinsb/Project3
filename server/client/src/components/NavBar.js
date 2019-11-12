@@ -24,6 +24,10 @@ const NavBar = () => {
                 <NavLink className="nav-link" activeClassName="active"
                 to="/search">Search</NavLink>
             </li>
+            <li className="nav-link">
+                <NavLink className="nav-link" activeClassName="active"
+                to="/search">Profile</NavLink>
+            </li>
         </ul>
     </div>
 </nav>
