@@ -13,7 +13,7 @@ class Discover extends Component {
     }
 
     componentDidMount = () => {
-        this.getRandomRecipe();
+        this.loadRecipes();
     }
 
     loadRecipes = () => {

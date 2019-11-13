@@ -3,7 +3,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-const authController = require('./auth.controller')
+const authController = require('../controllers/auth.controller')
 
 // Setting up the passport middleware for each of the OAuth providers
 const twitterAuth = passport.authenticate('twitter')

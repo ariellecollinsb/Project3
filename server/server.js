@@ -9,7 +9,6 @@ const cors = require('cors');
 const apiRoutes = require("./routes/api/apiRoutes");
 const socketio = require('socket.io');
 const authRouter = require('./routes/authRouter');
-const authController = require("./controllers/auth.controller");
 const passportInit = require('./controllers/passportInit');
 const { SESSION_SECRET, CLIENT_ORIGIN } = require('./config');
 const app = express();
