@@ -8,7 +8,8 @@ class Discover extends Component {
         name: "",
         ingredients: "",
         method: "",
-        favourites: []
+        favourites: [],
+        userName: ""
 
     }
 
@@ -26,11 +27,10 @@ class Discover extends Component {
         return (
             <>
             <h2>Discover</h2>
-
             </>
         )
     }
 
-}
+};
 
 export default Discover;

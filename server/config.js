@@ -1,22 +1,22 @@
-const providers = ['twitter', 'google', 'facebook', 'github']
+const providers = ['google', 'github']
 
 const callbacks = providers.map(provider => {
   return process.env.NODE_ENV === 'production'
-    ? `https://react-auth-twitter.herokuapp.com/${provider}/callback`
-    : `https://localhost:8080/${provider}/callback`
+    ? `http://localhost:3001/${provider}/callback`
+    : `http://localhost:3001/${provider}/callback`
 })
 
-const [twitterURL, googleURL, facebookURL, githubURL] = callbacks
+const [googleURL, githubURL] = callbacks
 
 exports.CLIENT_ORIGIN = process.env.NODE_ENV === 'production'
-  ? 'https://react-auth-twitter.netlify.com'
-  : ['https://127.0.0.1:3000', 'https://localhost:3000']
+  ? 'http://localhost:3001'
+  : ['http://127.0.0.1:3000', 'http://localhost:3000']
 
-exports.TWITTER_CONFIG = {
-  consumerKey: process.env.TWITTER_KEY,
-  consumerSecret: process.env.TWITTER_SECRET,
-  callbackURL: twitterURL,
-}
+// exports.TWITTER_CONFIG = {
+//   consumerKey: process.env.TWITTER_KEY,
+//   consumerSecret: process.env.TWITTER_SECRET,
+//   callbackURL: twitterURL,
+// }
 
 exports.GOOGLE_CONFIG = {
   clientID: process.env.GOOGLE_KEY,
@@ -24,12 +24,12 @@ exports.GOOGLE_CONFIG = {
   callbackURL: googleURL
 }
 
-exports.FACEBOOK_CONFIG = {
-  clientID: process.env.FACEBOOK_KEY,
-  clientSecret: process.env.FACEBOOK_SECRET,
-  profileFields: ['id', 'emails', 'name', 'picture.width(250)'],
-  callbackURL: facebookURL
-}
+// exports.FACEBOOK_CONFIG = {
+//   clientID: process.env.FACEBOOK_KEY,
+//   clientSecret: process.env.FACEBOOK_SECRET,
+//   profileFields: ['id', 'emails', 'name', 'picture.width(250)'],
+//   callbackURL: facebookURL
+// }
 
 exports.GITHUB_CONFIG = {
   clientID: process.env.GITHUB_KEY,

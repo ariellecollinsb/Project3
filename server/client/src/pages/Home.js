@@ -14,7 +14,7 @@ const Home = () => {
 
                 
                 <form>
-
+sign up form
                 </form>
         </section>
 

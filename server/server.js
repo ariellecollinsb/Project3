@@ -1,12 +1,9 @@
 require('dotenv').config();
 const express = require("express");
-const path = require("path");
 const session = require('express-session');
-const fs = require('fs');
-const https = require('https');
 const passport = require('passport');
 const cors = require('cors');
-const apiRoutes = require("./routes/api/apiRoutes");
+const http = require("http");
 const socketio = require('socket.io');
 const authRouter = require('./routes/authRouter');
 const passportInit = require('./controllers/passportInit');
@@ -14,38 +11,33 @@ const { SESSION_SECRET, CLIENT_ORIGIN } = require('./config');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-
-// Define middleware here
-
 // Setup for passport and to accept JSON objects
-app.use(express.json())
-app.use(passport.initialize())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
 passportInit()
 
 // Accept requests from the client
-app.use(cors({
-  origin: CLIENT_ORIGIN
-})) 
+app.use(cors({origin: '*'})) 
+app.use(function (req, res, next) {
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+  // Website you wish to allow to connect
+  res.header('Access-Control-Allow-Origin', '*');
 
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
+  // Request methods you wish to allow
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-const certOptions = {
-  key: fs.readFileSync(path.resolve('certs/server.key')),
-  cert: fs.readFileSync(path.resolve('certs/server.crt'))
-}
+  // Request headers you wish to allow
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
-const server = https.createServer(certOptions, app)
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', false);
 
-// Connecting sockets to the server and adding them to the request 
-// so that we can access them later in the controller
-const io = socketio(server)
-app.set('io', io)
+  // Pass to next layer of middleware
+  next();
+});
+
 
 // saveUninitialized: true allows us to attach the socket id to the session
 // before we have athenticated the user
@@ -55,32 +47,25 @@ app.use(session({
   saveUninitialized: true 
 }))
 
-// Connecting sockets to the server and adding them to the request 
-// so that we can access them later in the controller
-// const io = socketio(server)
-app.set('io', io)
 
-// Use apiRoutes
-app.use("/api", apiRoutes);
 
-// Direct all requests to the auth router
+
+
+app.use("/api", require("./routes/api/apiRoutes"));
+app.get('/wake-up', (req, res) => res.send('👍'))
 app.use('/', authRouter)
 
-// Send every request to the React app
-// Define any API routes before this runs
-app.get("*", function(req, res) {
-  res.send("Server Active");
-});
 
-
-
-app.listen(PORT, function() {
+var server = app.listen(PORT, function() {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
 
-// server.js
-server.listen(process.env.PORT || 8080, () => {
-  console.log('listening...')
-});
-
-// https://localhost:8080/__provider__/callback
+// Set up socket server
+//var server = http.createServer(app);
+var io = require('socket.io')(server);  //pass a http.Server instance
+//server.listen(80);
+app.set('io', io)
+io.set('origins', '*:*');
+io.on('connection', function(socket){
+  console.log("Socket Connection");
+})
