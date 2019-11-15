@@ -10,6 +10,7 @@
 //   }
   
   exports.google = (req, res) => {
+    req.session.save();
     const io = req.app.get('io')
     const user = { 
       name: req.user.displayName,

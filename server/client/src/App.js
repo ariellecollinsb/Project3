@@ -9,13 +9,11 @@ import Discover from "./pages/Discover";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import API from "./utils/API";
-// import Axios from "axios";
 
 const socket = io(API_URL);
 const providers = ['google', 'github'];
 
 export default class App extends Component {
-
   state = {
     loading: true
   }

@@ -4,18 +4,9 @@ const Home = () => {
     return (
         <section>
             <h2>Home</h2>
-            <hr/>
+            <hr />
             <p>Everything you need to know
                 about my meal prepper app!</p>
-            <p>Everything you need to know
-                about my meal prepper app!</p>
-            <p>Everything you need to know
-                about my meal prepper app!</p>
-
-                
-                <form>
-sign up form
-                </form>
         </section>
 
     )

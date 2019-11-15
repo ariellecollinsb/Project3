@@ -28,6 +28,7 @@ router.get("/recipes/byDish/:search/:page?", (req, res) => {
   });
 
 router.get("/recipes/random/:search", (req, res) => {
+  console.log(req.isAuthenticated(), req.user, req.sessionID);
     var page = "&p=" + Math.ceil(Math.random() * 99).toString()
     axios
       .get("http://www.recipepuppy.com/api/?q=" + req.params.search + page)
@@ -38,7 +39,5 @@ router.get("/recipes/random/:search", (req, res) => {
       .catch(err => res.status(404).json([]))
       .catch(err => res.status(422).json(err))
   });
-
-
 
 module.exports = router;

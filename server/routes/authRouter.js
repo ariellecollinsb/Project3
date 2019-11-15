@@ -15,7 +15,7 @@ const githubAuth = passport.authenticate('github')
 // With the socket id attached we can send back the right user info to 
 // the right socket
 const addSocketIdtoSession = (req, res, next) => {
-  req.session.socketId = req.query.socketId
+  req.session.socketId = req.query.socketId;
   next()
 }
 
@@ -29,6 +29,7 @@ router.get('/github', addSocketIdtoSession, githubAuth)
 // the user has authenticated successfully
 // router.get('/twitter/callback', twitterAuth, authController.twitter)
 router.get('/google/callback', googleAuth, authController.google)
+
 // router.get('/facebook/callback', facebookAuth, authController.facebook)
 router.get('/github/callback', githubAuth, authController.github)
 

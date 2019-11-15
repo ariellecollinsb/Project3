@@ -6,9 +6,6 @@ const Profile = () => {
             <h2>Welcome userName</h2>
             <hr/>
             <p>User Profile</p>
-            <p>User Profile</p>
-            <p>User Profile</p>
-            <p>User Profile</p>
         </section>
 
     )
