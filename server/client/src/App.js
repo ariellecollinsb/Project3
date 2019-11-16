@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { render } from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import io from 'socket.io-client';
 import OAuth from './components/OAuth';
 import { API_URL } from './config';
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import Search from "./pages/Search";
 import Discover from "./pages/Discover";
 import Home from "./pages/Home";
@@ -52,9 +54,13 @@ export default class App extends Component {
             )}
           </div>
         </div>
+        <Footer>
+
+        </Footer>
       </>
     );
   }
+
 };
 
 

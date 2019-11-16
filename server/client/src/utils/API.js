@@ -9,16 +9,20 @@ export default {
         });
     },
 
-    // Deletes the book with the given id
-    deleteUser: function (id) {
-        return axios.delete("/api/users/" + id);
-    },
-    // Saves a book to the database
-    saveUser: function (userData) {
-        return axios.post("/api/users", userData);
+    getRecipes: function (query) {
+        return axios.get("http://localhost:3001/api/recipes", { params: { q: query } });
     },
 
-    wakeUp: function() {
+    // Deletes the user with the given id
+    deleteUser: function (id) {
+        return axios.delete("http://localhost:3001/api/users/" + id);
+    },
+    // Saves user info to the database
+    saveUser: function (userData) {
+        return axios.post("http://localhost:3001/api/users", userData);
+    },
+
+    wakeUp: function () {
         return axios.get(API_URL + "/wake-up");
     }
 };
