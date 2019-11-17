@@ -1,8 +1,7 @@
 require('dotenv').config();
 const express = require("express");
-
-
-const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
+// const bodyParser = require('body-parser');
 const cors = require('cors');
 const authRouter = require('./routes/authRouter');
 const passportInit = require('./controllers/passportInit');
@@ -13,9 +12,11 @@ const PORT = process.env.PORT || 3001;
 // Setup for passport and to accept JSON objects
 app.use(express.static('public'));
 app.use(express.json());
-app.use(bodyParser());
+// app.use(bodyParser());
 app.use(express.urlencoded({ extended: true }));
 
+// Connect to the Mongo DB
+mongoose.connect("mongodb://localhost/InstaPrep", { useNewUrlParser: true });
 
 // Accept requests from the client
 app.use(cors({
@@ -24,19 +25,14 @@ app.use(cors({
   credentials: true
 })) 
 
-
-
-
 passportInit(app)
-
-
 
 app.use("/api", require("./routes/api/apiRoutes"));
 app.get('/wake-up', (req, res) => res.send('👍'))
 app.use('/', authRouter)
 
 
-var server = app.listen(PORT, function() {
+let server = app.listen(PORT, function() {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
 
