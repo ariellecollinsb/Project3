@@ -1,13 +1,21 @@
 require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
-// const bodyParser = require('body-parser');
+const fs = require('fs');
+const join = require('path').join;
 const cors = require('cors');
 const authRouter = require('./routes/authRouter');
 const passportInit = require('./controllers/passportInit');
-const { SESSION_SECRET, CLIENT_ORIGIN } = require('./config');
+const { dbConfig } = require('./config');
 const app = express();
 const PORT = process.env.PORT || 3001;
+const models = join(__dirname, './models');
+const session = require('express-session');
+
+// Bootstrap models
+fs.readdirSync(models)
+  .filter(file => ~file.search(/^[^.].*\.js$/))
+  .forEach(file => require(join(models, file)));
 
 // Setup for passport and to accept JSON objects
 app.use(express.static('public'));
@@ -15,8 +23,6 @@ app.use(express.json());
 // app.use(bodyParser());
 app.use(express.urlencoded({ extended: true }));
 
-// Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/InstaPrep", { useNewUrlParser: true });
 
 // Accept requests from the client
 app.use(cors({
@@ -31,6 +37,7 @@ app.use("/api", require("./routes/api/apiRoutes"));
 app.get('/wake-up', (req, res) => res.send('👍'))
 app.use('/', authRouter)
 
+mongoose.connect(dbConfig, { useNewUrlParser: true });
 
 let server = app.listen(PORT, function() {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
@@ -42,6 +49,5 @@ var io = require('socket.io')(server);  //pass a http.Server instance
 //server.listen(80);
 app.set('io', io)
 io.set('origins', '*:*');
-io.on('connection', function(socket){
-  console.log("Socket Connection");
-})
+io.on('connection', function(socket){})
+//connect();

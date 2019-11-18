@@ -2,10 +2,10 @@
 
   exports.google = (req, res) => {
     req.session.save();
-    const io = req.app.get('io')
+    const io = req.app.get('io');
     const user = { 
-      name: req.user.displayName,
-      photo: req.user.photos[0].value.replace(/sz=50/gi, 'sz=250')
+      ...req.user,
+      provider: "google",
     }
     io.in(req.session.socketId).emit('google', user)
   }
@@ -14,7 +14,10 @@
     const io = req.app.get('io')
     const user = { 
       name: req.user.username,
-      photo: req.user.photos[0].value
+      photo: req.user.photos[0].value,
+      provider: "github",
+      email: "",
+      registered: req.user.registered
     }
     io.in(req.session.socketId).emit('github', user)
   } 
